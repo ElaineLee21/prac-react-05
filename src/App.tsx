@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import "./App.css";
+import Counter from "./screens/Counter";
+import Main from "./screens/Main";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    //<Main />
+    <BrowserRouter>
+      <PublicRoute />
+      <NavBar />
+    </BrowserRouter>
   );
 }
+
+const NavBar = () => {
+  const navigate = useNavigate();
+
+  const onClick = (path: string) => {
+    return navigate(path);
+  };
+
+  return (
+    <div>
+      <button onClick={() => onClick("/")}>Main</button>
+      <button onClick={() => onClick("/counter")}>Counter</button>
+    </div>
+  );
+};
+
+const PublicRoute = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/counter" element={<Counter />} />
+      <Route path="*" element={<div>Not Found</div>} />
+    </Routes>
+  );
+};
 
 export default App;
